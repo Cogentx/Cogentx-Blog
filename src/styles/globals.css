@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-black dark:text-gray-100;
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .navBtn {
+    @apply hidden h-6 md:inline-flex transition-all cursor-pointer hover:scale-125 duration-150 ease-out;
+  }
+
+  .btn {
+    @apply inline-block px-5 py-3 rounded-lg hover:scale-125 hover:bg-cx-arrow transition-all cursor-pointer duration-300 ease-out shadow-lg text-white capitalize tracking-wider font-semibold text-sm sm:text-xl focus:outline-none focus:ring-4 focus:ring-cx-arrow focus:ring-opacity-50 whitespace-nowrap ;
+  }
+}
