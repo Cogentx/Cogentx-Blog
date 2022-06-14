@@ -5,11 +5,11 @@ module.exports = {
     extend: {
       colors: {
         'cx-arrow': '#01B400',
-        'cx-text-white':'#ffffff',
-        'cx-bg-darkest': '#000000',
-        'cx-bg-dark': '#111111',
-        'cx-brd-dark': '#333333',
-        'cx-gray-800': '#888888',
+        'cx-white':'#ffffff',
+        'cx-darkest': '#000000',
+        'cx-dark-1': '#111111',
+        'cx-dark-3': '#333333',
+        'cx-dark-8': '#888888',
       },
     },
   },
