@@ -16,10 +16,9 @@ export default function Layout({ children }: IProps) {
       </Head>
 
       <div className="h-screen overflow-y-scroll scrollbar-hide">
-        <Header />
         <main className="flex-grow container mx-auto sm-px-6 min-h-screen">{children}</main>
 
-        <Footer />
+
       </div>
     </>
   );
