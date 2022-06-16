@@ -4,7 +4,7 @@ type IProps = {
   prop: any;
 };
 
-export default function EnterPage({ prop }: IProps) {
+export default function SignInPage({ prop }: IProps) {
 
   return (
     <main>
