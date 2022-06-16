@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { HomeIcon } from '@heroicons/react/outline';
 import Logos from '../components/Logo';
 import ModeSwitcher from '../components/ModeSwitcher';
+import Search from '../components/Search';
 
 export default function Header() {
   // Theme will not be known on the server; only render ModeSwitcher after component mounted
@@ -21,11 +22,11 @@ export default function Header() {
 
         {/* Center - Search Input */}
         <div className="max-w-xs">
-          <div className="relative mt-1 rounded-md p-3"></div>
+          <Search/>
         </div>
 
         {/* Right */}
-        <div className="flex items-center justify-end space-x-4">
+        <div className="flex items-center justify-end space-x-4 mr-6">
           <HomeIcon className="navBtn" />
           {mounted && <ModeSwitcher />}
           <h1 className="navBtn">Sign In</h1>
