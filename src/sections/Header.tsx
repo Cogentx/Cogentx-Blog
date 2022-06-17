@@ -4,7 +4,6 @@ import { HomeIcon } from '@heroicons/react/outline';
 import Logos from '../components/Logo';
 import ModeSwitcher from '../components/ModeSwitcher';
 import Search from '../components/Search';
-import toast from 'react-hot-toast';
 
 export default function Header() {
   // Theme will not be known on the server; only render ModeSwitcher after component mounted
@@ -15,11 +14,6 @@ export default function Header() {
 
   const user = null;
   const username = null;
-
-  const handleSignIn = () => {
-    toast.success('Welcome!!!');
-    router.push('/signin');
-  };
 
   return (
     <div className="sticky top-0 z-50 border-b dark:border-cx-dark-3 dark:text-white shadow-lg">
@@ -36,10 +30,10 @@ export default function Header() {
 
         {/* Right */}
         <div className="flex items-center justify-end space-x-4 mr-6">
-          <HomeIcon className="navBtn" />
+          <HomeIcon className="navBtn" onClick={() => router.push('/')} />
           {mounted && <ModeSwitcher />}
 
-          <button onClick={handleSignIn} className="navBtn">
+          <button onClick={() => router.push('/signin')} className="navBtn">
             Sign In
           </button>
         </div>
