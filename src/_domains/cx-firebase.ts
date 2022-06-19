@@ -1,3 +1,4 @@
+// TODO: stringify and put into environment variable then import from env var and parse so that no Domain Specific information (whether secret or not) is stored in CODE.
 export const firebaseConfig = {
   apiKey: 'AIzaSyDV7KRqzWnZEsZPvhoT8Ww0Mwa2hOfer3c',
   authDomain: 'cogentx-360ai-app.firebaseapp.com',
