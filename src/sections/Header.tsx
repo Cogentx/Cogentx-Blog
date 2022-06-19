@@ -12,11 +12,8 @@ export default function Header() {
 
   const router = useRouter();
 
-  const user = null;
-  const username = null;
-
   return (
-    <div className="sticky top-0 z-50 border-b dark:border-cx-dark-3 dark:text-white shadow-lg">
+    <div className="sticky top-0 z-50 border-b dark:border-cx-dark-3 dark:text-white shadow-lg h-[var(--header-height)]">
       <div className="flex max-w-6xl items-center justify-between dark:text-white">
         {/* Left */}
         <div onClick={() => router.push('/')}>
@@ -33,8 +30,12 @@ export default function Header() {
           <HomeIcon className="navBtn" onClick={() => router.push('/')} />
           {mounted && <ModeSwitcher />}
 
-          <button onClick={() => router.push('/signin')} className="navBtn">
-            Sign In
+          <button onClick={() => router.push('/login')} className="navBtn">
+            Login
+          </button>
+
+          <button onClick={() => router.push('/signup')} className="navBtn">
+            Sign Up
           </button>
         </div>
       </div>
