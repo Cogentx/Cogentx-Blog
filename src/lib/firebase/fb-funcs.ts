@@ -47,18 +47,18 @@ An instance of PopupRedirectResolver, optional if already supplied to initialize
 @public
  */
 
-const fbSignInWithPopup = async (provider: AuthProvider) => {
+const fbSignInWithGoogle = async () => {
   try {
-    await signInWithPopup(auth, provider);
+    await signInWithPopup(auth, authProviderGoogle);
   } catch (error) {
     // TODO: add proper error handling
     console.log('fb-funcs-popup: ', error);
   }
 };
 
-const fbSignInWithGoogle = () => {
-  fbSignInWithPopup(authProviderGoogle);
-};
+// const fbSignInWithGoogle = () => {
+//   fbSignInWithPopup(authProviderGoogle);
+// };
 
 const fbSignOut = async () => {
   try {

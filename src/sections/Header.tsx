@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { HomeIcon } from '@heroicons/react/outline';
 import Logos from '../components/Logo';
 import ModeSwitcher from '../components/ModeSwitcher';
 import Search from '../components/Search';
+import { UserContext } from '../lib/react/context';
 
 export default function Header() {
+  const { user, username } = useContext(UserContext);
+
   // Theme will not be known on the server; only render ModeSwitcher after component mounted
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);

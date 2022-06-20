@@ -1,9 +1,11 @@
 import type { NextPage } from 'next';
+import { useContext } from 'react';
 import Image from 'next/image';
 import Layout from '../sections/Layout';
 import Metatags from '../lib/nextjs/Metatags';
 import UsernameForm from '../components/UsernameForm';
 import { fbSignInWithGoogle, fbSignOut } from '../lib/firebase/fb-funcs';
+import { UserContext } from '../lib/react/context';
 
 /** SignInPage - 3 possible auth contexts
  * 1. user signed out - <SignInButton/>
@@ -13,8 +15,9 @@ import { fbSignInWithGoogle, fbSignOut } from '../lib/firebase/fb-funcs';
  * @returns SignInPage | NextPage
  */
 const LoginPage: NextPage = () => {
-  const user = true;
-  const username = true;
+  const { user, username } = useContext(UserContext);
+  console.log({user}, {username});
+  
 
   return (
     <>
@@ -26,7 +29,9 @@ const LoginPage: NextPage = () => {
             !username ? (
               <UsernameForm />
             ) : (
-              <button className="accessBtn" onClick={fbSignOut}>Sign Out</button>
+              <button className="accessBtn" onClick={fbSignOut}>
+                Sign Out
+              </button>
             )
           ) : (
             <div>

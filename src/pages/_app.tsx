@@ -6,7 +6,7 @@ import { UserContext } from '../lib/react/context';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <UserContext.Provider value={{user:{}, username:'Cogentx'}}>
+    <UserContext.Provider value={{user:null, username:'Cogentx'}}>
       <ThemeProvider enableSystem={true} attribute="class">
         <Component {...pageProps} />
         <Toaster />
