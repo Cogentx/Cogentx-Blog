@@ -1,12 +1,15 @@
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
-import '../styles/globals.css';
 import { UserContext } from '../lib/react/context';
+import { useUserData } from '../lib/firebase/fb-hooks';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const userData = useUserData();
+
   return (
-    <UserContext.Provider value={{user:null, username:'Cogentx'}}>
+    <UserContext.Provider value={userData}>
       <ThemeProvider enableSystem={true} attribute="class">
         <Component {...pageProps} />
         <Toaster />
