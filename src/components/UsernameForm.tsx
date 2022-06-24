@@ -1,16 +1,16 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, FormEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
 import Loading from './Loading';
 import { db } from '../lib/firebase/fb-init';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 
 export default function UsernameForm() {
   const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { username } = useContext(UserContext);
+  const { user, username } = useContext(UserContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const checkUsername = useCallback(
@@ -26,13 +26,36 @@ export default function UsernameForm() {
     []
   );
 
-  const onSubmit = () => {
-    console.log('on submit');
+  const onSubmit = (e: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!user || !username) return;
+
+    // create refs for both documents
+    const userDoc = doc(db, 'users', user.uid);
+    const usernameDoc = doc(db, 'username', username);
+
+    // commit both docs together
+    const batch = writeBatch(db);
+    batch.set(userDoc, {
+      username: formValue,
+      photoUrl: user.photoURL,
+      displayName: user.displayName,
+    });
+    batch.set(usernameDoc, {
+      uid: user.uid,
+    });
+
+    try {
+      batch.commit();
+    } catch (error) {
+      console.log('set username failed', error);
+    }
   };
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     // Force form value typed in form to match correct format
-    const val = event?.target.value.toLowerCase();
+    const val = e?.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
     // Only set form value if length is < 3 OR it passes regex
@@ -58,7 +81,14 @@ export default function UsernameForm() {
       <section>
         <h3>Choose Username</h3>
         <form onSubmit={onSubmit} className="flex flex-col mt-4">
-          <input type="text" name="username" className="bg-transparent" placeholder="Username" value={formValue} onChange={onChange} />
+          <input
+            type="text"
+            name="username"
+            className="bg-transparent"
+            placeholder="Username"
+            value={formValue}
+            onChange={onChange}
+          />
           <button className="btn mt-4" type="submit" onSubmit={onSubmit} disabled={!isValid}>
             Choose
           </button>
