@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { cxLogo, cxLogoName } from '../_domains/cx-logos';
+import { cxLogo, cxLogoName } from '../@domains/cx-logos';
 
 export default function Logos() {
   return (
