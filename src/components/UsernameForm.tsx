@@ -1,4 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
 import Loading from './Loading';
 import { db } from '../lib/firebase/fb-init';
@@ -15,7 +16,7 @@ export default function UsernameForm() {
     formValue && checkUsername(formValue);
   }, [formValue]);
 
-  const checkUsername = async (username: string) => {
+  const checkUsername = debounce(async (username: string) => {
     if (username.length >= 3) {
       const ref = doc(db, 'usernames', username);
       const snapshot = await getDoc(ref);
@@ -23,7 +24,7 @@ export default function UsernameForm() {
       setIsValid(!snapshot.exists());
       setLoading(false);
     }
-  };
+  },500);
 
   const onSubmit = () => {
     console.log('on submit');
