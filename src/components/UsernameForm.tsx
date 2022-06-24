@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
 import Loading from './Loading';
@@ -12,19 +12,19 @@ export default function UsernameForm() {
 
   const { username } = useContext(UserContext);
 
-  useEffect(() => {
-    formValue && checkUsername(formValue);
-  }, [formValue]);
-
-  const checkUsername = debounce(async (username: string) => {
-    if (username.length >= 3) {
-      const ref = doc(db, 'usernames', username);
-      const snapshot = await getDoc(ref);
-      console.log('Firestore read executed!', snapshot.exists());
-      setIsValid(!snapshot.exists());
-      setLoading(false);
-    }
-  },500);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const checkUsername = useCallback(
+    debounce(async (username: string) => {
+      if (username.length >= 3) {
+        const ref = doc(db, 'usernames', username);
+        const snapshot = await getDoc(ref);
+        console.log('Firestore read executed!', snapshot.exists());
+        setIsValid(!snapshot.exists());
+        setLoading(false);
+      }
+    }, 500),
+    []
+  );
 
   const onSubmit = () => {
     console.log('on submit');
@@ -49,23 +49,27 @@ export default function UsernameForm() {
     }
   };
 
+  useEffect(() => {
+    formValue && checkUsername(formValue);
+  }, [formValue, checkUsername]);
+
   return (
-    !formValue && (
+    !username && (
       <section>
         <h3>Choose Username</h3>
-        <form onSubmit={onSubmit}>
-          <input type="text" name="username" placeholder="Username" value={formValue} onChange={onChange} />
-          <button className="bg-green-500" type="submit" onSubmit={onSubmit} disabled={!isValid}>
+        <form onSubmit={onSubmit} className="flex flex-col mt-4">
+          <input type="text" name="username" className="bg-transparent" placeholder="Username" value={formValue} onChange={onChange} />
+          <button className="btn mt-4" type="submit" onSubmit={onSubmit} disabled={!isValid}>
             Choose
           </button>
 
-          <h3>Debug State</h3>
+          <h3 className="mt-8 font-bold">Debug State</h3>
           <div>
             Username: {formValue}
             <br />
-            Loading: {loading}
+            Loading: {loading.toString()}
             <br />
-            Username Valid: {isValid}
+            Username Valid: {isValid.toString()}
           </div>
         </form>
       </section>
