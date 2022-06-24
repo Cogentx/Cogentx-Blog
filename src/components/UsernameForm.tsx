@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent, FormEventHandler, useCallback, useContext, useEffect, useState } from 'react';
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
-import Loading from './Loading';
 import { db } from '../lib/firebase/fb-init';
-import { doc, getDoc, writeBatch } from 'firebase/firestore';
 
 export default function UsernameForm() {
   const [formValue, setFormValue] = useState('');
@@ -18,7 +17,7 @@ export default function UsernameForm() {
       if (username.length >= 3) {
         const ref = doc(db, 'usernames', username);
         const snapshot = await getDoc(ref);
-        console.log('Firestore read executed!', snapshot.exists());
+
         setIsValid(!snapshot.exists());
         setLoading(false);
       }
@@ -26,14 +25,14 @@ export default function UsernameForm() {
     []
   );
 
-  const onSubmit = (e: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!user || !username) return;
+    if (!user || !formValue) return;
 
     // create refs for both documents
     const userDoc = doc(db, 'users', user.uid);
-    const usernameDoc = doc(db, 'username', username);
+    const usernameDoc = doc(db, 'usernames', formValue);
 
     // commit both docs together
     const batch = writeBatch(db);
@@ -47,7 +46,7 @@ export default function UsernameForm() {
     });
 
     try {
-      batch.commit();
+      await batch.commit();
     } catch (error) {
       console.log('set username failed', error);
     }
@@ -66,6 +65,8 @@ export default function UsernameForm() {
     }
 
     if (re.test(val)) {
+      console.log('re', val);
+
       setFormValue(val);
       setLoading(true);
       setIsValid(false);
@@ -89,6 +90,7 @@ export default function UsernameForm() {
             value={formValue}
             onChange={onChange}
           />
+          <UsernameMessage username={formValue} loading={loading} isValid={isValid} />
           <button className="btn mt-4" type="submit" onSubmit={onSubmit} disabled={!isValid}>
             Choose
           </button>
@@ -105,4 +107,22 @@ export default function UsernameForm() {
       </section>
     )
   );
+}
+
+interface IUserMessageProps {
+  username: string;
+  isValid: boolean;
+  loading: boolean;
+}
+
+function UsernameMessage({ username, loading, isValid }: IUserMessageProps): JSX.Element {
+  if (loading) {
+    return <p>Checking...</p>;
+  } else if (isValid) {
+    return <p className="font-bold text-green-500">{username} is available!</p>;
+  } else if (username && username.length >= 3 && !isValid) {
+    return <p className="font-bold text-red-500">Sorry, username is taken!</p>;
+  } else {
+    return <p></p>;
+  }
 }
