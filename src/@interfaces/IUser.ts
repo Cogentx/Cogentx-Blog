@@ -7,6 +7,7 @@ interface IUsername {
 interface IUserProfile {
   uid: string;
   username: string;
+  displayName: string;
   photoUrl: string;
 }
 
