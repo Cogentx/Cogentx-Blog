@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { metatags } from '../../_domains/cx-metatags';
+import { metatags } from '../../@domains/cx-metatags';
 
 type IProps = {
   title: string;
