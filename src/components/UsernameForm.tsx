@@ -66,8 +66,6 @@ export default function UsernameForm() {
     }
 
     if (re.test(val)) {
-      console.log('re', val);
-
       setFormValue(val);
       setLoading(true);
       setIsValid(false);

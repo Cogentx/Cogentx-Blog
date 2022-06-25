@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { IUserProfile } from '../@interfaces/IUser';
 
 type IProps = {
@@ -7,12 +6,13 @@ type IProps = {
 
 export default function UserProfile({ user }: IProps) {
   return (
-    <div className="flex flex-col align-center text-center">
-      <Image priority src={user.photoUrl || '/avatar.png'} alt="user profile photo" width={40} height={40} />
-      <p>
+    <div className="flex flex-col items-center justify-center mt-20">
+      {/*eslint-disable-next-line @next/next/no-img-element*/}
+      <img src={user.photoUrl || '/avatar.png'} alt="user profile photo" className="w-20 h-20 rounded-full" />
+      <p className="mt-4">
         <i>@{user.username}</i>
       </p>
-      <h1>{user.displayName || 'Anonymous'}</h1>
+      <h1 className="text-3xl font-bold mt-4">{user.displayName || 'Anonymous'}</h1>
     </div>
   );
 }

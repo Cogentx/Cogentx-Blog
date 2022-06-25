@@ -1,5 +1,8 @@
 import { signInWithPopup, signInAnonymously, Auth, AuthProvider } from 'firebase/auth';
+import { query } from 'firebase/firestore';
 import { auth, authProviderGoogle } from './fb-init';
+
+// AUTH exports
 
 /** Asynchronously signs in as an anonymous user
  *
@@ -55,10 +58,6 @@ const fbSignInWithGoogle = async () => {
     console.log('fb-funcs-popup: ', error);
   }
 };
-
-// const fbSignInWithGoogle = () => {
-//   fbSignInWithPopup(authProviderGoogle);
-// };
 
 const fbSignOut = async () => {
   try {

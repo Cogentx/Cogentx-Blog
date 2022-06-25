@@ -17,7 +17,6 @@ import { UserContext } from '../lib/react/context';
  */
 const LoginPage: NextPage = () => {
   const { user, username } = useContext(UserContext);
-  console.log({user}, {username});
 
 
   return (
