@@ -24,6 +24,8 @@ export default function UserProfilePage({ user, posts }: IProps) {
   );
 }
 
+const LIMIT = 5;
+
 type ServerProps = {
   query: { username: string };
 };
@@ -53,7 +55,7 @@ export async function getServerSideProps({ query: urlQuery }: ServerProps) {
     collection(db, userDoc.ref.path, 'posts'),
     where('published', '==', true),
     orderBy('createdAt', 'desc'),
-    limit(5)
+    limit(LIMIT)
   );
 
   // JSON serialize data to send over Internet
