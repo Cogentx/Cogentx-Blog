@@ -4,10 +4,11 @@ interface IUsername {
 }
 
 // users/{uid} | Public user profile
-interface IUser {
+interface IUserProfile {
   uid: string;
   username: string;
+  displayName: string;
   photoUrl: string;
 }
 
-export type { IUsername, IUser };
+export type { IUsername, IUserProfile };

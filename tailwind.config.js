@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cx-arrow': '#01B400',
+        'cx-green': '#01B400',
         'cx-white': '#ffffff',
         'cx-darkest': '#000000',
         'cx-dark-1': '#111111',

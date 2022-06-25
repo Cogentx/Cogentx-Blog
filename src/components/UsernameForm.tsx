@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
 import { db } from '../lib/firebase/fb-init';
 
+// TODO:factor out Firebase functions to 'lib/firebase/...'
 export default function UsernameForm() {
   const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -65,8 +66,6 @@ export default function UsernameForm() {
     }
 
     if (re.test(val)) {
-      console.log('re', val);
-
       setFormValue(val);
       setLoading(true);
       setIsValid(false);

@@ -1,4 +1,4 @@
-import { Timestamp } from '@firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 // users/{uid}/posts/{slug} | user can have many posts
 interface IPost {

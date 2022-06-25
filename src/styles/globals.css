@@ -15,7 +15,7 @@
   }
 
   .btn {
-    @apply inline-block px-5 py-3 rounded-lg hover:scale-125 hover:bg-cx-arrow transition-all cursor-pointer duration-300 ease-out shadow-lg text-white capitalize tracking-wider font-semibold text-sm sm:text-xl focus:outline-none focus:ring-4 focus:ring-cx-arrow focus:ring-opacity-50 whitespace-nowrap;
+    @apply inline-block px-3 sm:px-5 py-2 sm:py-3 rounded-lg hover:scale-125 hover:bg-cx-green hover:brightness-90 transition-all cursor-pointer duration-300 ease-out shadow-lg text-white capitalize tracking-wider font-semibold text-sm sm:text-xl focus:outline-none focus:ring-4 focus:ring-cx-green focus:ring-opacity-50 whitespace-nowrap;
   }
 
   .accessBtn {
