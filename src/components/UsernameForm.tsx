@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/react/context';
 import { db } from '../lib/firebase/fb-init';
 
+const MIN_USERNAME_LENGTH = 3;
+
 // TODO:factor out Firebase functions to 'lib/firebase/...'
 export default function UsernameForm() {
   const [formValue, setFormValue] = useState('');
@@ -15,7 +17,7 @@ export default function UsernameForm() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const checkUsername = useCallback(
     debounce(async (username: string) => {
-      if (username.length >= 3) {
+      if (username.length >= MIN_USERNAME_LENGTH) {
         const ref = doc(db, 'usernames', username);
         const snapshot = await getDoc(ref);
 
@@ -58,8 +60,8 @@ export default function UsernameForm() {
     const val = e?.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
-    // Only set form value if length is < 3 OR it passes regex
-    if (val.length < 3) {
+    // Only set form value if length is < MIN_USERNAME_LENGTH OR it passes regex
+    if (val.length < MIN_USERNAME_LENGTH) {
       setFormValue(val);
       setLoading(false);
       setIsValid(false);
@@ -119,7 +121,7 @@ function UsernameMessage({ username, loading, isValid }: IUserMessageProps): JSX
     return <p>Checking...</p>;
   } else if (isValid) {
     return <p className="font-bold text-green-500">{username} is available!</p>;
-  } else if (username && username.length >= 3 && !isValid) {
+  } else if (username && username.length >= MIN_USERNAME_LENGTH && !isValid) {
     return <p className="font-bold text-red-500">Sorry, username is taken!</p>;
   } else {
     return <p></p>;
