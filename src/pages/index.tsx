@@ -5,9 +5,20 @@ import toast from 'react-hot-toast';
 import Layout from '../sections/Layout';
 import { db } from '../lib/firebase/fb-init';
 import { postToJSON } from '../lib/firebase/fb-helpers';
+import { IPost } from '../@interfaces/IBlogPosts';
+import Posts from '../components/Posts';
+import { useState } from 'react';
+import Loading from '../components/Loading';
 
 // apply 'dark' class to trigger dark mode
-const Home: NextPage = () => {
+interface IProps {
+  posts: IPost[];
+}
+const Home: NextPage<IProps> = ({ posts: postsFromSSR }: IProps) => {
+  const [posts, setPosts] = useState(postsFromSSR);
+  const [loading, setLoading] = useState(false);
+  const [postsEnd, setPostsEnd] = useState(false);
+
   return (
     <>
       <Head>
@@ -17,7 +28,13 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <button onClick={() => toast.success('Hello World!!!')}>Hello World!!!</button>
+        <Posts posts={posts} />
+
+        {!loading && !postsEnd && <button>Learn More</button>}
+
+        <Loading show={!loading} />
+
+        {postsEnd && 'You have reached the end!'}
       </Layout>
     </>
   );
@@ -35,7 +52,17 @@ export async function getServerSideProps() {
   const ref = collectionGroup(db, 'posts');
   const postsQuery = query(ref, where('published', '==', true), orderBy('createdAt', 'desc'), limit(LIMIT));
 
-  const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+  let posts = null;
+
+  try {
+    console.log('before', { posts });
+
+    posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+    console.log('after', { posts });
+  } catch (error) {
+    // TODO: handle error properly
+    console.log('SSR-home: ', error);
+  }
 
   return { props: { posts } };
 }
