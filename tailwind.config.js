@@ -12,7 +12,10 @@ module.exports = {
         'cx-dark-8': '#888888',
       },
       spacing: {
-        'header': '64px',
+        header: '64px',
+      },
+      animation: {
+        'loading-spinner': 'spin 2s linear infinite',
       },
     },
   },
