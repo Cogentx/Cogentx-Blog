@@ -7,11 +7,11 @@ type IProps = {
 };
 
 export default function Post({ post, admin = false }: IProps) {
-  const wordCount = post.content.trim().split(/\s+/g).length;
+  const wordCount = post.content?.trim().split(/\s+/g).length || 0;
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
 
   return (
-    <div className="p-8 my-4 bg-white border-cx-dark-3 border rounded-lg">
+    <div className="p-8 my-4 text-black bg-white border-cx-dark-3 border rounded-lg">
       <Link href={`/${post.username}`}>
         <a className="text-inherit no-underline cursor-pointer">
           <strong>By @{post.username}</strong>
@@ -24,8 +24,8 @@ export default function Post({ post, admin = false }: IProps) {
         </h2>
       </Link>
 
-      <footer className="flex">
-        <span>
+      <footer className="flex mt-4">
+        <span className="text-cx-dark-3">
           {wordCount} words. {minutesToRead} min read.
         </span>
         <span className="ml-auto">💗 {post.heartCount || 0} Hearts</span>

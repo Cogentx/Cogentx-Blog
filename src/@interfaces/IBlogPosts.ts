@@ -7,10 +7,10 @@ interface IPost {
   uid: string;
   username: string;
   published: boolean;
-  content: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  heartCount: number;
+  content?: string;
+  createdAt?: Timestamp | string | number;
+  updatedAt?: Timestamp | string | number;
+  heartCount?: number;
 }
 
 // users/{uid}/posts/{slug}/hearts/{uid} | many-to-many relationship between users and posts via hearts
@@ -18,4 +18,4 @@ interface IHeart {
   uid: string;
 }
 
-export type {IPost, IHeart}
+export type { IPost, IHeart };
