@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Layout from '../sections/Layout';
 import Metatags from '../lib/nextjs/Metatags';
 import UsernameForm from '../components/UsernameForm';
-import { fbSignInWithGoogle, fbSignOut } from '../lib/firebase/fb-funcs';
+import { fbSignInWithGoogle, fbSignOut } from '../lib/firebase/fb-auth';
 import { UserContext } from '../lib/react/context';
 
 /** SignInPage - 3 possible auth contexts

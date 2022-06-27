@@ -1,14 +1,15 @@
 import type { NextPage } from 'next';
+import type { IPost } from '../@interfaces/IBlogPosts';
+import { useState } from 'react';
 import Head from 'next/head';
-import { collectionGroup, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
-import toast from 'react-hot-toast';
+import { collectionGroup, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore';
 import Layout from '../sections/Layout';
 import { db } from '../lib/firebase/fb-init';
-import { postToJSON } from '../lib/firebase/fb-helpers';
-import { IPost } from '../@interfaces/IBlogPosts';
+import { postToJSON, fbFromMillis } from '../lib/firebase/fb-firestore';
 import Posts from '../components/Posts';
-import { useState } from 'react';
 import Loading from '../components/Loading';
+
+const LIMIT = 1;
 
 // apply 'dark' class to trigger dark mode
 interface IProps {
@@ -17,7 +18,37 @@ interface IProps {
 const Home: NextPage<IProps> = ({ posts: postsFromSSR }: IProps) => {
   const [posts, setPosts] = useState(postsFromSSR);
   const [loading, setLoading] = useState(false);
+
   const [postsEnd, setPostsEnd] = useState(false);
+
+  const getMorePosts = async () => {
+    setLoading(true);
+
+    const lastPost = posts[posts.length - 1];
+
+    const cursor = typeof lastPost.createdAt === 'number' ? fbFromMillis(lastPost.createdAt) : lastPost.createdAt;
+
+    const ref = collectionGroup(db, 'posts');
+    const postsQuery = query(
+      ref,
+      where('published', '==', true),
+      orderBy('createdAt', 'desc'),
+      startAfter(cursor),
+      limit(LIMIT)
+    );
+
+    let newPosts: IPost[] = [];
+    try {
+      // TODO: factor out Firebase stuff to 'lib/firebase/...'
+      const postDocs = (await getDocs(postsQuery)).docs;
+
+      newPosts = postDocs.map((doc) => doc.data()) as IPost[];
+      setPosts(posts.concat(newPosts));
+    } catch (error) {
+      // TODO: handle error properly
+      console.log('Error loading more posts', error);
+    }
+  };
 
   return (
     <>
@@ -30,7 +61,11 @@ const Home: NextPage<IProps> = ({ posts: postsFromSSR }: IProps) => {
       <Layout>
         <Posts posts={posts} />
 
-        {!loading && !postsEnd && <button>Learn More</button>}
+        {!loading && !postsEnd && (
+          <button className="btn mt-4" onClick={getMorePosts}>
+            Learn More
+          </button>
+        )}
 
         <Loading show={!loading} />
 
@@ -42,8 +77,6 @@ const Home: NextPage<IProps> = ({ posts: postsFromSSR }: IProps) => {
 
 export default Home;
 
-const LIMIT = 1;
-
 /** Enable SSR
  * @params context
  */
@@ -52,13 +85,10 @@ export async function getServerSideProps() {
   const ref = collectionGroup(db, 'posts');
   const postsQuery = query(ref, where('published', '==', true), orderBy('createdAt', 'desc'), limit(LIMIT));
 
-  let posts = null;
+  let posts: IPost[] = [];
 
   try {
-    console.log('before', { posts });
-
     posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-    console.log('after', { posts });
   } catch (error) {
     // TODO: handle error properly
     console.log('SSR-home: ', error);

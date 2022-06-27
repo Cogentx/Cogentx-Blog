@@ -2,7 +2,7 @@ import { query, collection, where, limit, orderBy, getDocs } from 'firebase/fire
 import Metatags from '../../lib/nextjs/Metatags';
 import UserProfile from '../../components/UserProfile';
 import Posts from '../../components/Posts';
-import { getUserWithUsername, postToJSON } from '../../lib/firebase/fb-helpers';
+import { getUserWithUsername, postToJSON } from '../../lib/firebase/fb-firestore';
 import { db } from '../../lib/firebase/fb-init';
 import Layout from '../../sections/Layout';
 
