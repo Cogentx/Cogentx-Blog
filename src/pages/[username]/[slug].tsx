@@ -10,10 +10,10 @@ import { db } from '../../lib/firebase/fb-init';
 import Metatags from '../../lib/nextjs/Metatags';
 import { UserContext } from '../../lib/react/context';
 
-type IProps = {
+interface IProps {
   path: string;
   post: IPost;
-};
+}
 
 /** PostPage
  *
@@ -23,7 +23,7 @@ type IProps = {
  * @param post{string} IPost
  * @returns PostPage as JSX.Element
  */
-export default function PostPage({ path, post: postFromProps }:IProps) {
+export default function PostPage({ path, post: postFromProps }: IProps) {
   // user 'path' returned from 'getStaticProps' to access on client side
   const postRef = doc(db, path);
   const [realtimePost] = useDocumentData(postRef);

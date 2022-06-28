@@ -6,10 +6,10 @@ import { getUserWithUsername, postToJSON } from '../../lib/firebase/fb-firestore
 import { db } from '../../lib/firebase/fb-init';
 import Layout from '../../sections/Layout';
 
-type IProps = {
+interface IProps {
   user: any;
   posts: any[];
-};
+}
 
 export default function UserProfilePage({ user, posts }: IProps) {
   return (
