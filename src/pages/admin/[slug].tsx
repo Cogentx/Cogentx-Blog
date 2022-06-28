@@ -1,7 +1,10 @@
-interface IProps {
-  prop: any;
-}
+import AuthCheck from '../../components/AuthCheck';
+import PostManager from '../../components/PostManager';
 
-export default function AdminPostEditPage({ prop }: IProps) {
-  return <main>AdminPostEditPage</main>;
+export default function AdminPostEditPage() {
+  return (
+    <AuthCheck>
+      <PostManager />
+    </AuthCheck>
+  );
 }
