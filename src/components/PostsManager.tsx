@@ -11,7 +11,7 @@ import { IPost } from '../@interfaces/IBlogPosts';
  *
  * @returns JSX.Element
  */
-export default function ManagePosts() {
+export default function PostsManager() {
   // Note: ManagePosts component must be wrapped by Auth Check to ensure user is logged in | otherwise 'useCollection' hook cannot be used. The '!' syntax in 'auth.currentUser!.uid' is our guarantee to TypeScript that 'auth.currentUser' will be available at runtime.
   const uid = auth.currentUser!.uid;
   const postsRef = collection(db, 'users', uid, 'posts');
