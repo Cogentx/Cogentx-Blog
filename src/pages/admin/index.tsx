@@ -1,5 +1,5 @@
 
-type IProps = {
+interface IProps {
   prop: any;
 };
 
