@@ -1,4 +1,14 @@
-import { collection, DocumentSnapshot, getDoc, getDocs, limit, query, Timestamp, where } from 'firebase/firestore';
+import {
+  collection,
+  DocumentSnapshot,
+  getDoc,
+  getDocs,
+  limit,
+  query,
+  serverTimestamp,
+  Timestamp,
+  where,
+} from 'firebase/firestore';
 import { IPost } from '../../@interfaces/IBlogPosts';
 import { db } from './fb-init';
 
@@ -18,10 +28,9 @@ const getUserWithUsername = async (username: string) => {
  * @param {DocumentSnapshot} doc
  */
 const postToJSON = (doc: DocumentSnapshot) => {
-  const data:IPost = doc.data() as IPost;
-  const createdAt = (<Timestamp>(data?.createdAt)).toMillis() || 0;
-  const updatedAt = (<Timestamp>(data?.updatedAt)).toMillis() || 0;
-
+  const data: IPost = doc.data() as IPost;
+  const createdAt = (<Timestamp>data?.createdAt).toMillis() || 0;
+  const updatedAt = (<Timestamp>data?.updatedAt).toMillis() || 0;
 
   return {
     ...data,
@@ -38,4 +47,10 @@ const fbFromMillis = (timestamp: number) => {
   Timestamp.fromMillis(timestamp);
 };
 
-export { getUserWithUsername, postToJSON, fbFromMillis };
+/** Instructs Firestore to create Timestamp on the server side
+ *
+ * Note: this avoids issues with creating timestamp on the client side which introduces issues with date settings, timezone settings, etc.
+ */
+const fbServerTimestamp = () => serverTimestamp;
+
+export { getUserWithUsername, postToJSON, fbFromMillis, fbServerTimestamp };
