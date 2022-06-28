@@ -14,5 +14,5 @@ interface IProps {
 export default function AuthCheck({ children, fallback }: IProps) {
   const { username } = useContext(UserContext);
 
-  return username ? children : fallback || <Link href="/enter">Secure content. Please login in to continue.</Link>;
+  return username ? children : fallback || <Link href="/login">Secure content. Please login in to continue.</Link>;
 }

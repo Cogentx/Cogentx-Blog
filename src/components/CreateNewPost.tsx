@@ -60,19 +60,19 @@ export default function CreateNewPost() {
   };
 
   return (
-    <form onSubmit={createPost}>
+    <form onSubmit={createPost} className="mt-8 flex flex-col">
       <input
         type="text"
-        className="outline-none border-none text-4xl w-full py-1 px-3"
+        className="outline-none border-none text-4xl w-full py-1 px-3 rounded-sm bg-white text-black "
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="My Awesome New Article!"
       />
       <p>
-        <strong>Slug:</strong>
+        <strong className="mt-1 mr-2">Slug:</strong>
         {slug}
       </p>
-      <button type="submit" className="btn" disabled={!isValid}>
+      <button type="submit" className="btn mt-4 bg-transparent border border-cx-dark-3" disabled={!isValid}>
         Create New Post
       </button>
     </form>
