@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { UserContext } from '../lib/react/context';
 
 interface IProps {
-  children: JSX.Element[];
-  fallback?: JSX.Element;
+  children: any;
+  fallback?: any;
 }
 
 /** Component to display content based on user's logged in state.
