@@ -29,6 +29,8 @@ export default function CreateNewPost() {
 
     // Note: ManagePosts component must be wrapped by Auth Check to ensure user is logged in | otherwise 'useCollection' hook cannot be used. The '!' syntax in 'auth.currentUser!.uid' is our guarantee to TypeScript that 'auth.currentUser' will be available at runtime.
     const uid = auth.currentUser!.uid;
+
+    // reference document with 'slug' which does not exist. This instructs Firestore to create a new document.
     const postRef = doc(db, 'users', uid, 'posts', slug);
 
     // Advisable to provide all fields default values to avoid query errors later
