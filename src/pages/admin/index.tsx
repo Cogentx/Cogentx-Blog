@@ -1,7 +1,7 @@
 import Layout from '../../sections/Layout';
 import AuthCheck from '../../components/AuthCheck';
 import CreateNewPost from '../../components/CreateNewPost';
-import ManagePosts from '../../components/ManagePosts';
+import PostsManager from '../../components/PostsManager';
 import Metatags from '../../lib/nextjs/Metatags';
 
 interface IProps {
@@ -15,7 +15,7 @@ export default function AdminPostsPage({ prop }: IProps) {
 
       <Layout>
         <AuthCheck>
-          <ManagePosts />
+          <PostsManager />
           <CreateNewPost />
         </AuthCheck>
       </Layout>
