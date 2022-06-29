@@ -7,7 +7,7 @@ interface IPost {
   uid: string;
   username: string;
   published: boolean;
-  content?: string;
+  content: string;
   createdAt?: Timestamp | string | number;
   updatedAt?: Timestamp | string | number;
   heartCount?: number;
