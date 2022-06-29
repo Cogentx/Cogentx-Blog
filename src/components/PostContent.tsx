@@ -3,7 +3,7 @@ import { Timestamp } from 'firebase/firestore';
 import { IPost } from '../@interfaces/IBlogPosts';
 import ReactMarkdown from 'react-markdown';
 
-type IProps = {
+interface IProps {
   post: IPost;
 };
 
