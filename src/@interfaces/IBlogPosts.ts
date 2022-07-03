@@ -8,8 +8,8 @@ interface IPost {
   username: string;
   published: boolean;
   content: string;
-  createdAt?: Timestamp | string | number;
-  updatedAt?: Timestamp | string | number;
+  createdAt?: Timestamp | number;
+  updatedAt?: Timestamp | number;
   heartCount?: number;
 }
 

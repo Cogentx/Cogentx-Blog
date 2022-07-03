@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import type { IPost } from '../@interfaces/IBlogPosts';
 
 interface IProps {
-  defaultValues: IPost;
+  defaultValues: any;
   postRef: DocumentReference;
   preview: boolean;
 }
@@ -35,7 +35,10 @@ export default function PostForm({ defaultValues, postRef, preview }: IProps) {
         </div>
       )}
 
-      
+      <div className={preview ? 'hidden' : 'flex flex-col'}>
+        <textarea className="h-[60vh] border-none outline-none p-2 text-lg" {...register('content')}></textarea>
+      </div>
+
     </form>
   );
 }

@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/react/context.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/react/context.ts", "**/*.js","**/*.jsx"],
   "exclude": ["node_modules"]
 }
